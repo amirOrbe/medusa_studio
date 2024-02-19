@@ -1,0 +1,8 @@
+<.header>
+  Editar Servicio <%= @service.id %>
+  <:subtitle>Utilice este formulario para administrar registros de servicios en su base de datos.</:subtitle>
+</.header>
+
+<.service_form changeset={@changeset} action={~p"/services/#{@service}"} />
+
+<.back navigate={~p"/services"}>Regresar a servicios</.back>

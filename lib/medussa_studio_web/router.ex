@@ -24,6 +24,12 @@ defmodule MedussaStudioWeb.Router do
     get "/contact", PageController, :contact
   end
 
+  scope "/", MedussaStudioWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    resources "/services", ServiceController
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", MedussaStudioWeb do
   #   pipe_through :api
