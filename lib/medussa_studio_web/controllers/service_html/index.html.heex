@@ -1,0 +1,29 @@
+<.header>
+  Listado de Servicios
+  <:actions>
+    <%= if @current_user.admin do %>
+      <.link href={~p"/services/new"}>
+        <.button>Nuevo Servicio</.button>
+      </.link>
+    <% end %>
+  </:actions>
+</.header>
+<.table id="services" rows={@services} row_click={&JS.navigate(~p"/services/#{&1}")}>
+  <:col :let={service} label="Nombre"><%= service.name %></:col>
+  <:col :let={service} label="Precio"><%= service.price %></:col>
+  <:action :let={service}>
+    <%= if @current_user.admin do %>
+      <div class="sr-only">
+        <.link navigate={~p"/services/#{service}"}>Ver</.link>
+      </div>
+      <.link navigate={~p"/services/#{service}/edit"}>Editar</.link>
+    <% end %>
+  </:action>
+  <:action :let={service}>
+    <%= if @current_user.admin do %>
+      <.link href={~p"/services/#{service}"} method="delete" data-confirm="Estas seguro?">
+        Borrar
+      </.link>
+    <% end %>
+  </:action>
+</.table>
