@@ -5,54 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
     <.live_title suffix=" · Phoenix Framework">
-      <%= assigns[:page_title] || "MedussaStudio" %>
+      <%= assigns[:page_title] || "Medussa Studio" %>
     </.live_title>
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
-    <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
-    </script>
+    <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}></script>
   </head>
-  <body class="bg-white antialiased">
-    <ul class="relative z-10 flex items-center gap-4 px-4 sm:px-6 lg:px-8 justify-end">
-      <%= if @current_user do %>
-        <li class="text-[0.8125rem] leading-6 text-zinc-900">
-          <%= @current_user.email %>
-        </li>
-        <li>
-          <.link
-            href={~p"/users/settings"}
-            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-          >
-            Settings
-          </.link>
-        </li>
-        <li>
-          <.link
-            href={~p"/users/log_out"}
-            method="delete"
-            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-          >
-            Log out
-          </.link>
-        </li>
-      <% else %>
-        <li>
-          <.link
-            href={~p"/users/register"}
-            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-          >
-            Register
-          </.link>
-        </li>
-        <li>
-          <.link
-            href={~p"/users/log_in"}
-            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-          >
-            Log in
-          </.link>
-        </li>
-      <% end %>
-    </ul>
+  <body class="bg-gray-100 antialiased">
+    <header class="bg-red-700 text-white py-2">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center py-2">
+          <!-- Logo como enlace -->
+          <a href="/" class="flex items-center">
+            <img src="/images/logo-header.png" alt="Logo de Medussa Studio" class="h-16 w-auto mr-2 hover:opacity-75">
+          </a>
+          <button class="text-white text-sm lg:hidden">Menu</button>
+          <nav class="hidden lg:flex items-center space-x-4">
+            <ul class="flex space-x-4 text-white text-sm">
+              <li><a href="#" class="hover:text-gray-200">Agendar Cita</a></li>
+              <li><a href="#" class="hover:text-gray-200">Mis Citas</a></li>
+              <li><a href="#" class="hover:text-gray-200">Servicios</a></li>
+              <li><a href="#" class="hover:text-gray-200">Contacto</a></li>
+            </ul>
+          </nav>
+          <div class="flex items-center space-x-4">
+            <ul class="flex space-x-4 text-white text-sm">
+              <%= if @current_user do %>
+                <li>
+                  <div class="text-white text-sm"><%= @current_user.email %></div>
+                </li>
+                <li>
+                  <.link
+                href={~p"/users/settings"}
+                class="text-white text-sm hover:text-gray-200"
+              >
+                    Settings
+                  </.link>
+                </li>
+                <li>
+                  <.link
+                href={~p"/users/log_out"}
+                class="text-white text-sm hover:text-gray-200"
+              >
+                    Log out
+                  </.link>
+                </li>
+              <% else %>
+                <li>
+                  <.link
+                href={~p"/users/register"}
+                class="text-white text-sm hover:text-gray-200"
+              >
+                    Registrate
+                  </.link>
+                </li>
+                <li>
+                  <.link
+                href={~p"/users/log_in"}
+                class="text-white text-sm hover:text-gray-200"
+              >
+                    Ingresar
+                  </.link>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
     <%= @inner_content %>
   </body>
 </html>
