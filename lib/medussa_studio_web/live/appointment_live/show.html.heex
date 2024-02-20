@@ -1,5 +1,5 @@
 <.header>
-  Appointment <%= @appointment.id %>
+  Id de Cita <%= @appointment.id %>
   <:subtitle>Este es un registro de cita de su base de datos.</:subtitle>
   <:actions>
     <.link patch={~p"/appointments/#{@appointment}/show/edit"} phx-click={JS.push_focus()}>
