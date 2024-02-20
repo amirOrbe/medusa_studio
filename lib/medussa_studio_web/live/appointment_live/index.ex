@@ -16,19 +16,19 @@ defmodule MedussaStudioWeb.AppointmentLive.Index do
 
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
-    |> assign(:page_title, "Edit Appointment")
+    |> assign(:page_title, "Editar cita")
     |> assign(:appointment, Appointments.get_appointment!(id))
   end
 
   defp apply_action(socket, :new, _params) do
     socket
-    |> assign(:page_title, "New Appointment")
+    |> assign(:page_title, "Nueva cita")
     |> assign(:appointment, %Appointment{})
   end
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Listing Appointments")
+    |> assign(:page_title, "Lista de citas")
     |> assign(:appointment, nil)
   end
 

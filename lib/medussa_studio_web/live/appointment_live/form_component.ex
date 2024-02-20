@@ -9,7 +9,9 @@ defmodule MedussaStudioWeb.AppointmentLive.FormComponent do
     <div>
       <.header>
         <%= @title %>
-        <:subtitle>Use this form to manage appointment records in your database.</:subtitle>
+        <:subtitle>
+          Utilice este formulario para administrar registros de citas en su base de datos.
+        </:subtitle>
       </.header>
 
       <.simple_form
@@ -19,11 +21,11 @@ defmodule MedussaStudioWeb.AppointmentLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <.input field={@form[:date]} type="date" label="Date" />
-        <.input field={@form[:start_time]} type="time" label="Start time" />
-        <.input field={@form[:end_time]} type="time" label="End time" />
+        <.input field={@form[:date]} type="date" label="Fecha" />
+        <.input field={@form[:start_time]} type="time" label="Hora de Inicio" />
+        <.input field={@form[:end_time]} type="time" label="Hora de Fin" />
         <:actions>
-          <.button phx-disable-with="Saving...">Save Appointment</.button>
+          <.button phx-disable-with="Guardando...">Guardar Cita</.button>
         </:actions>
       </.simple_form>
     </div>

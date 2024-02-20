@@ -1,20 +1,20 @@
 <.header>
   Appointment <%= @appointment.id %>
-  <:subtitle>This is a appointment record from your database.</:subtitle>
+  <:subtitle>Este es un registro de cita de su base de datos.</:subtitle>
   <:actions>
     <.link patch={~p"/appointments/#{@appointment}/show/edit"} phx-click={JS.push_focus()}>
-      <.button>Edit appointment</.button>
+      <.button>Editar Cita</.button>
     </.link>
   </:actions>
 </.header>
 
 <.list>
-  <:item title="Date"><%= @appointment.date %></:item>
-  <:item title="Start time"><%= @appointment.start_time %></:item>
-  <:item title="End time"><%= @appointment.end_time %></:item>
+  <:item title="Fecha"><%= @appointment.date %></:item>
+  <:item title="Hora de Inicio"><%= @appointment.start_time %></:item>
+  <:item title="Hora de Fin"><%= @appointment.end_time %></:item>
 </.list>
 
-<.back navigate={~p"/appointments"}>Back to appointments</.back>
+<.back navigate={~p"/appointments"}>Regresar a Citas</.back>
 
 <.modal :if={@live_action == :edit} id="appointment-modal" show on_cancel={JS.patch(~p"/appointments/#{@appointment}")}>
   <.live_component

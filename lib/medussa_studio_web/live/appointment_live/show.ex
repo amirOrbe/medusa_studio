@@ -16,6 +16,6 @@ defmodule MedussaStudioWeb.AppointmentLive.Show do
      |> assign(:appointment, Appointments.get_appointment!(id))}
   end
 
-  defp page_title(:show), do: "Show Appointment"
-  defp page_title(:edit), do: "Edit Appointment"
+  defp page_title(:show), do: "Ver Cita"
+  defp page_title(:edit), do: "Editar Cita"
 end
