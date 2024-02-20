@@ -75,6 +75,12 @@ defmodule MedussaStudioWeb.Router do
       on_mount: [{MedussaStudioWeb.UserAuth, :ensure_authenticated}] do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+      live "/appointments", AppointmentLive.Index, :index
+      live "/appointments/new", AppointmentLive.Index, :new
+      live "/appointments/:id/edit", AppointmentLive.Index, :edit
+
+      live "/appointments/:id", AppointmentLive.Show, :show
+      live "/appointments/:id/show/edit", AppointmentLive.Show, :edit
     end
   end
 
