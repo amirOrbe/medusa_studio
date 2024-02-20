@@ -7,8 +7,7 @@
           <button class="text-white text-sm lg:hidden">Menu</button>
           <nav class="hidden lg:flex items-center space-x-4">
             <ul class="flex space-x-4 text-white text-sm">
-              <li><a href="#" class="hover:text-gray-200">Agendar Cita</a></li>
-              <li><a href="#" class="hover:text-gray-200">Mis Citas</a></li>
+              <li><a href="/appointments" class="hover:text-gray-200">Agendar Cita</a></li>
               <li><a href="/services" class="hover:text-gray-200">Servicios</a></li>
               <li><a href="/contact" class="hover:text-gray-200">Contacto</a></li>
             </ul>
@@ -30,6 +29,7 @@
                 <li>
                   <.link
                 href={~p"/users/log_out"}
+                method="delete"
                 class="text-white text-sm hover:text-gray-200"
               >
                     Salir
