@@ -1,6 +1,6 @@
 <.header>
   Servicio <%= @service.id %>
-  <:subtitle >Este es un registro de servicio de su base de datos.</:subtitle>
+  <:subtitle>Este es un registro de servicio de su base de datos.</:subtitle>
   <:actions>
     <.link href={~p"/services/#{@service}/edit"}>
       <.button class=" py-2 px-4 rounded">Editar servicio</.button>
@@ -8,7 +8,7 @@
   </:actions>
 </.header>
 <.list>
-  <:item title="Nombre" ><%= @service.name %></:item>
-  <:item title="Precio" ><%= @service.price %></:item>
+  <:item title="Nombre"><%= @service.name %></:item>
+  <:item title="Precio"><%= @service.price %></:item>
 </.list>
-<.back navigate={~p"/services"} >Regresar a Servicios</.back>
+<.back navigate={~p"/services"}>Regresar a Servicios</.back>

@@ -21,9 +21,22 @@ defmodule MedussaStudioWeb.AppointmentLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <.input field={@form[:date]} type="date" label="Fecha" />
+        <.input
+          field={@form[:date]}
+          type="date"
+          label="Fecha"
+          class="border-red-300 rounded-md shadow-sm"
+        />
+
         <.input field={@form[:start_time]} type="time" label="Hora de Inicio" />
         <.input field={@form[:end_time]} type="time" label="Hora de Fin" />
+        <.input
+          field={@form[:service]}
+          type="select"
+          label="Servicio"
+          options={["option 1", "option 2"]}
+          class="scroll-smooth md:scroll-auto"
+        />
         <:actions>
           <.button phx-disable-with="Guardando...">Guardar Cita</.button>
         </:actions>
@@ -57,7 +70,10 @@ defmodule MedussaStudioWeb.AppointmentLive.FormComponent do
   end
 
   defp save_appointment(socket, :edit, appointment_params) do
-    case Appointments.update_appointment(socket.assigns.appointment, appointment_params) do
+    case Appointments.update_appointment(
+           socket.assigns.appointment,
+           add_user_id_to_appointment(socket, appointment_params)
+         ) do
       {:ok, appointment} ->
         notify_parent({:saved, appointment})
 
@@ -72,7 +88,7 @@ defmodule MedussaStudioWeb.AppointmentLive.FormComponent do
   end
 
   defp save_appointment(socket, :new, appointment_params) do
-    case Appointments.create_appointment(appointment_params) do
+    case Appointments.create_appointment(add_user_id_to_appointment(socket, appointment_params)) do
       {:ok, appointment} ->
         notify_parent({:saved, appointment})
 
@@ -91,4 +107,10 @@ defmodule MedussaStudioWeb.AppointmentLive.FormComponent do
   end
 
   defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
+
+  defp add_user_id_to_appointment(
+         %{assigns: %{appointment: %{user_id: user_id}}},
+         appointment_params
+       ),
+       do: Map.put(appointment_params, "user_id", user_id)
 end

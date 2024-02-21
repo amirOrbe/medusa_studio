@@ -31,7 +31,12 @@
   </:action>
 </.table>
 
-<.modal :if={@live_action in [:new, :edit]} id="appointment-modal" show on_cancel={JS.patch(~p"/appointments")}>
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="appointment-modal"
+  show
+  on_cancel={JS.patch(~p"/appointments")}
+>
   <.live_component
     module={MedussaStudioWeb.AppointmentLive.FormComponent}
     id={@appointment.id || :new}

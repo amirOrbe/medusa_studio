@@ -2,10 +2,13 @@ defmodule MedussaStudioWeb.AppointmentLive.Show do
   use MedussaStudioWeb, :live_view
 
   alias MedussaStudio.Appointments
+  alias MedussaStudio.Accounts
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, socket}
+  def mount(_params, %{"user_token" => user_token}, socket) do
+    current_user = Accounts.get_user_by_session_token(user_token)
+
+    {:ok, assign(socket, current_user: current_user)}
   end
 
   @impl true

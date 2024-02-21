@@ -17,19 +17,21 @@ defmodule MedussaStudioWeb.AppointmentLive.Index do
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Editar cita")
+    |> assign(:user_id, get_current_user_id(socket))
     |> assign(:appointment, Appointments.get_appointment!(id))
   end
 
   defp apply_action(socket, :new, _params) do
     socket
     |> assign(:page_title, "Nueva cita")
-    |> assign(:appointment, %Appointment{})
+    |> assign(:appointment, %Appointment{user_id: get_current_user_id(socket)})
   end
 
   defp apply_action(socket, :index, _params) do
     socket
     |> assign(:page_title, "Lista de citas")
     |> assign(:appointment, nil)
+    |> assign(:user_id, get_current_user_id(socket))
   end
 
   @impl true
@@ -44,4 +46,6 @@ defmodule MedussaStudioWeb.AppointmentLive.Index do
 
     {:noreply, stream_delete(socket, :appointments, appointment)}
   end
+
+  defp get_current_user_id(%{assigns: %{current_user: %{id: id}}}), do: id
 end

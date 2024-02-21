@@ -16,7 +16,12 @@
 
 <.back navigate={~p"/appointments"}>Regresar a Citas</.back>
 
-<.modal :if={@live_action == :edit} id="appointment-modal" show on_cancel={JS.patch(~p"/appointments/#{@appointment}")}>
+<.modal
+  :if={@live_action == :edit}
+  id="appointment-modal"
+  show
+  on_cancel={JS.patch(~p"/appointments/#{@appointment}")}
+>
   <.live_component
     module={MedussaStudioWeb.AppointmentLive.FormComponent}
     id={@appointment.id}

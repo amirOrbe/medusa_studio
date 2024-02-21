@@ -98,7 +98,9 @@ defmodule MedussaStudio.Appointments do
       %Ecto.Changeset{data: %Appointment{}}
 
   """
-  def change_appointment(%Appointment{} = appointment, attrs \\ %{}) do
-    Appointment.changeset(appointment, attrs)
+  def change_appointment(%Appointment{user_id: user_id} = appointment, attrs \\ %{}) do
+    attrs_with_user_id = Map.put(attrs, "user_id", user_id)
+
+    Appointment.changeset(appointment, attrs_with_user_id)
   end
 end

@@ -37,7 +37,9 @@ defmodule MedussaStudio.AppointmentsTest do
       appointment = appointment_fixture()
       update_attrs = %{date: ~D[2024-02-20], start_time: ~T[15:01:01], end_time: ~T[15:01:01]}
 
-      assert {:ok, %Appointment{} = appointment} = Appointments.update_appointment(appointment, update_attrs)
+      assert {:ok, %Appointment{} = appointment} =
+               Appointments.update_appointment(appointment, update_attrs)
+
       assert appointment.date == ~D[2024-02-20]
       assert appointment.start_time == ~T[15:01:01]
       assert appointment.end_time == ~T[15:01:01]
@@ -45,7 +47,10 @@ defmodule MedussaStudio.AppointmentsTest do
 
     test "update_appointment/2 with invalid data returns error changeset" do
       appointment = appointment_fixture()
-      assert {:error, %Ecto.Changeset{}} = Appointments.update_appointment(appointment, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Appointments.update_appointment(appointment, @invalid_attrs)
+
       assert appointment == Appointments.get_appointment!(appointment.id)
     end
 

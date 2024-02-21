@@ -69,7 +69,10 @@ defmodule MedussaStudioWeb.AppointmentLiveTest do
     test "deletes appointment in listing", %{conn: conn, appointment: appointment} do
       {:ok, index_live, _html} = live(conn, ~p"/appointments")
 
-      assert index_live |> element("#appointments-#{appointment.id} a", "Delete") |> render_click()
+      assert index_live
+             |> element("#appointments-#{appointment.id} a", "Delete")
+             |> render_click()
+
       refute has_element?(index_live, "#appointments-#{appointment.id}")
     end
   end

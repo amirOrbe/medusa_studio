@@ -1,4 +1,5 @@
 defmodule MedussaStudio.Appointments.Appointment do
+  alias MedussaStudio.Accounts
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -6,8 +7,8 @@ defmodule MedussaStudio.Appointments.Appointment do
     field :date, :date
     field :start_time, :time
     field :end_time, :time
-    field :user_id, :id
-    field :service_id, :id
+    belongs_to :user, Accounts.User
+    many_to_many :services, MedussaStudio.Services.Service, join_through: "appointments_services"
 
     timestamps(type: :utc_datetime)
   end
@@ -15,7 +16,7 @@ defmodule MedussaStudio.Appointments.Appointment do
   @doc false
   def changeset(appointment, attrs) do
     appointment
-    |> cast(attrs, [:date, :start_time, :end_time])
+    |> cast(attrs, [:date, :start_time, :end_time, :user_id])
     |> validate_required([:date, :start_time, :end_time])
   end
 end

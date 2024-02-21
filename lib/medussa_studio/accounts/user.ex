@@ -11,6 +11,7 @@ defmodule MedussaStudio.Accounts.User do
     field :number_phone, :string
     field :birthday, :date
     field :admin, :boolean
+    has_many :appointments, MedussaStudio.Appointments.Appointment
 
     timestamps(type: :utc_datetime)
   end

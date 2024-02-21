@@ -1,8 +1,10 @@
-  <.header>
-    Nuevo Servicio
-    <:subtitle>Utilice este formulario para administrar registros de servicios en su base de datos.</:subtitle>
-  </.header>
+<.header>
+  Nuevo Servicio
+  <:subtitle>
+    Utilice este formulario para administrar registros de servicios en su base de datos.
+  </:subtitle>
+</.header>
 
-  <.service_form changeset={@changeset} action={~p"/services"} />
+<.service_form changeset={@changeset} action={~p"/services"} />
 
-  <.back navigate={~p"/services"}>Regresar a Servicios</.back>
+<.back navigate={~p"/services"}>Regresar a Servicios</.back>
