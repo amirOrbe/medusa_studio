@@ -2,6 +2,8 @@ defmodule MedussaStudioWeb.AppointmentLive.FormComponent do
   use MedussaStudioWeb, :live_component
 
   alias MedussaStudio.Appointments
+  alias MedussaStudio.Services
+  alias MedussaStudio.Repo
 
   @impl true
   def render(assigns) do
@@ -31,12 +33,18 @@ defmodule MedussaStudioWeb.AppointmentLive.FormComponent do
         <.input field={@form[:start_time]} type="time" label="Hora de Inicio" />
         <.input field={@form[:end_time]} type="time" label="Hora de Fin" />
         <.input
-          field={@form[:service]}
+          field={@form[:service_ids]}
           type="select"
-          label="Servicio"
-          options={["option 1", "option 2"]}
+          label="Servicios"
+          multiple={true}
+          options={list_services_with_id()}
           class="scroll-smooth md:scroll-auto"
         />
+        <p class="mt-2 text-xs text-neutral-500">
+          Mantenga presionada la tecla <kbd>Ctrl</kbd>
+          (o <kbd>Command</kbd>
+          en Mac) para seleccionar o anular varios grupos.
+        </p>
         <:actions>
           <.button phx-disable-with="Guardando...">Guardar Cita</.button>
         </:actions>
@@ -88,14 +96,31 @@ defmodule MedussaStudioWeb.AppointmentLive.FormComponent do
   end
 
   defp save_appointment(socket, :new, appointment_params) do
-    case Appointments.create_appointment(add_user_id_to_appointment(socket, appointment_params)) do
-      {:ok, appointment} ->
-        notify_parent({:saved, appointment})
+    %{"service_ids" => service_ids} = appointment_params
+    service_ids = Enum.map(service_ids, &String.to_integer/1)
+    updated_params = Map.put(appointment_params, "service_ids", service_ids)
+    IO.inspect(updated_params, label: "updated_params params--->")
 
-        {:noreply,
-         socket
-         |> put_flash(:info, "Appointment created successfully")
-         |> push_patch(to: socket.assigns.patch)}
+    case Appointments.create_appointment(add_user_id_to_appointment(socket, updated_params)) do
+      {:ok, appointment} ->
+        updated_appointment =
+          appointment
+          |> Ecto.Changeset.change()
+          |> Map.put(:services, Enum.map(service_ids, &Services.get_service!/1))
+          |> Repo.update()
+
+        case updated_appointment do
+          {:ok, appointment} ->
+            notify_parent({:saved, appointment})
+
+            {:noreply,
+             socket
+             |> put_flash(:info, "Appointment created successfully")
+             |> push_patch(to: socket.assigns.patch)}
+
+          {:error, %Ecto.Changeset{} = changeset} ->
+            {:noreply, assign_form(socket, changeset)}
+        end
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}
@@ -113,4 +138,7 @@ defmodule MedussaStudioWeb.AppointmentLive.FormComponent do
          appointment_params
        ),
        do: Map.put(appointment_params, "user_id", user_id)
+
+  defp list_services_with_id(),
+    do: Enum.map(Services.list_services(), fn %{id: id, name: name} -> {name, id} end)
 end

@@ -17,6 +17,7 @@ defmodule MedussaStudio.Appointments.Appointment do
   def changeset(appointment, attrs) do
     appointment
     |> cast(attrs, [:date, :start_time, :end_time, :user_id])
+    |> cast_assoc(:services)
     |> validate_required([:date, :start_time, :end_time])
   end
 end
