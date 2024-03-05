@@ -1,4 +1,5 @@
 defmodule MedussaStudio.Services.Service do
+  alias MedussaStudio.AppointmentsServices.AppointmentService
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -6,8 +7,9 @@ defmodule MedussaStudio.Services.Service do
     field :name, :string
     field :price, :decimal
 
-    many_to_many :appointments, MedussaStudio.Appointments.Appointment,
-      join_through: "appointments_services"
+    many_to_many :appointment_services, MedussaStudio.Appointments.Appointment,
+      join_through: AppointmentService,
+      on_replace: :delete
 
     timestamps(type: :utc_datetime)
   end
