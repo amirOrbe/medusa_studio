@@ -60,7 +60,7 @@ defmodule MedussaStudioWeb.UserResetPasswordLive do
       {:ok, _} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Password reset successfully.")
+         |> put_flash(:info, "Restablecimiento de contraseña exitoso.")
          |> redirect(to: ~p"/users/log_in")}
 
       {:error, changeset} ->
@@ -78,7 +78,7 @@ defmodule MedussaStudioWeb.UserResetPasswordLive do
       assign(socket, user: user, token: token)
     else
       socket
-      |> put_flash(:error, "Reset password link is invalid or it has expired.")
+      |> put_flash(:error, "El enlace para restablecer contraseña no es válido o ha caducado.")
       |> redirect(to: ~p"/")
     end
   end

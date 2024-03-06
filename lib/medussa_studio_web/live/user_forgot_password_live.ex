@@ -40,7 +40,7 @@ defmodule MedussaStudioWeb.UserForgotPasswordLive do
     end
 
     info =
-      "If your email is in our system, you will receive instructions to reset your password shortly."
+      "Si su correo electrónico está en nuestro sistema, recibirá instrucciones para restablecer su contraseña en breve."
 
     {:noreply,
      socket

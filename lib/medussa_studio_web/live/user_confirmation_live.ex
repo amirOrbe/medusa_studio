@@ -35,7 +35,7 @@ defmodule MedussaStudioWeb.UserConfirmationLive do
       {:ok, _} ->
         {:noreply,
          socket
-         |> put_flash(:info, "User confirmed successfully.")
+         |> put_flash(:info, "Usuario confirmad@ con éxito.")
          |> redirect(to: ~p"/")}
 
       :error ->
@@ -50,7 +50,10 @@ defmodule MedussaStudioWeb.UserConfirmationLive do
           %{} ->
             {:noreply,
              socket
-             |> put_flash(:error, "User confirmation link is invalid or it has expired.")
+             |> put_flash(
+               :error,
+               "El enlace de confirmación del usuario no es válido o ha caducado."
+             )
              |> redirect(to: ~p"/")}
         end
     end

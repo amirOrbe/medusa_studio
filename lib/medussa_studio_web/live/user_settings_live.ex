@@ -77,10 +77,14 @@ defmodule MedussaStudioWeb.UserSettingsLive do
     socket =
       case Accounts.update_user_email(socket.assigns.current_user, token) do
         :ok ->
-          put_flash(socket, :info, "Email changed successfully.")
+          put_flash(socket, :info, "El correo electrónico se cambió correctamente.")
 
         :error ->
-          put_flash(socket, :error, "Email change link is invalid or it has expired.")
+          put_flash(
+            socket,
+            :error,
+            "El enlace de cambio de correo electrónico no es válido o ha caducado."
+          )
       end
 
     {:ok, push_navigate(socket, to: ~p"/users/settings")}
@@ -127,7 +131,9 @@ defmodule MedussaStudioWeb.UserSettingsLive do
           &url(~p"/users/settings/confirm_email/#{&1}")
         )
 
-        info = "A link to confirm your email change has been sent to the new address."
+        info =
+          "Se ha enviado un enlace para confirmar el cambio de correo electrónico a la nueva dirección."
+
         {:noreply, socket |> put_flash(:info, info) |> assign(email_form_current_password: nil)}
 
       {:error, changeset} ->

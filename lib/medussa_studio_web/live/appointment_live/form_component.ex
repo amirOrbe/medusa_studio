@@ -83,12 +83,32 @@ defmodule MedussaStudioWeb.AppointmentLive.FormComponent do
            add_user_id_to_appointment(socket, appointment_params)
          ) do
       {:ok, appointment} ->
-        notify_parent({:saved, appointment})
+        %{"services" => services} = appointment_params
 
-        {:noreply,
-         socket
-         |> put_flash(:info, "Cita actualizada exitosamente")
-         |> push_patch(to: socket.assigns.patch)}
+        id_services =
+          Enum.map(services, fn service ->
+            service |> String.to_integer() |> Services.get_service!()
+          end)
+
+        updated_appointment =
+          appointment
+          |> Repo.preload(:appointment_services)
+          |> Ecto.Changeset.change()
+          |> Ecto.Changeset.put_assoc(:appointment_services, id_services)
+          |> Repo.update()
+
+        case updated_appointment do
+          {:ok, _updated_appointment} ->
+            notify_parent({:saved, appointment})
+
+            {:noreply,
+             socket
+             |> put_flash(:info, "Cita actualizada exitosamente")
+             |> push_patch(to: socket.assigns.patch)}
+
+          {:error, %Ecto.Changeset{} = changeset} ->
+            {:noreply, assign_form(socket, changeset)}
+        end
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}

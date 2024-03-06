@@ -18,7 +18,7 @@ defmodule MedussaStudioWeb.ServiceController do
     case Services.create_service(service_params) do
       {:ok, service} ->
         conn
-        |> put_flash(:info, "Service created successfully.")
+        |> put_flash(:info, "Servicio creado exitosamente.")
         |> redirect(to: ~p"/services/#{service}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -43,7 +43,7 @@ defmodule MedussaStudioWeb.ServiceController do
     case Services.update_service(service, service_params) do
       {:ok, service} ->
         conn
-        |> put_flash(:info, "Service updated successfully.")
+        |> put_flash(:info, "Servicio actualizado exitosamente.")
         |> redirect(to: ~p"/services/#{service}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -56,7 +56,7 @@ defmodule MedussaStudioWeb.ServiceController do
     {:ok, _service} = Services.delete_service(service)
 
     conn
-    |> put_flash(:info, "Service deleted successfully.")
+    |> put_flash(:info, "Servicio eliminado exitosamente.")
     |> redirect(to: ~p"/services")
   end
 end
